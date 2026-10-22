@@ -5,9 +5,7 @@ import (
 
 	"github.com/SAB1825/go_wallet/internal/config"
 	"github.com/SAB1825/go_wallet/internal/database"
-	userHandler "github.com/SAB1825/go_wallet/internal/user/handler"
-	userRepository "github.com/SAB1825/go_wallet/internal/user/repository"
-	userService "github.com/SAB1825/go_wallet/internal/user/service"
+	userRoutes "github.com/SAB1825/go_wallet/internal/user/routes"
 	"github.com/gin-gonic/gin"
 )
 
@@ -25,21 +23,9 @@ func main() {
 	}
 	defer db.Close()
 
-	// REPOSITORIES
-	uRepo := userRepository.NewMySQLUserRepository(db)
-
-	// SERVICES
-	uSvc := userService.NewUserService(uRepo)
-
-	// HANDLER
-	uHandler := userHandler.NewUserHandler(uSvc)
-
-	// GIN SETUP
 	r := gin.Default()
 
-	r.POST("/api/v1/users", uHandler.Reqister)
-	r.GET("/api/v1/users/:id", uHandler.GetProfile)
-	r.PUT("/api/v1/users/:id", uHandler.UpdateProfile)
+	userRoutes.RegisterUserRoutes(r, db)
 
 	// STARTING APPLICATION
 	if err := r.Run(":8080"); err != nil {

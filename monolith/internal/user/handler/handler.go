@@ -16,7 +16,7 @@ func NewUserHandler(svc service.UserService) *UserHandler {
 	return &UserHandler{svc: svc}
 }
 
-func (h *UserHandler) Reqister(c *gin.Context) {
+func (h *UserHandler) Register(c *gin.Context) {
 	var req model.CreateUserRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
