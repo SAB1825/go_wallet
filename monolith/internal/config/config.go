@@ -16,7 +16,7 @@ func LoadConfig() (*Config, error) {
 		return nil, err
 	}
 
-	dsn := os.Getenv("DB_USER") + ":" +
+	dsn := os.Getenv("DB_USER`") + ":" +
 		os.Getenv("DB_PASSWORD") + "@tcp(" +
 		os.Getenv("DB_HOST") + ":" +
 		os.Getenv("DB_PORT") + ")/" +
